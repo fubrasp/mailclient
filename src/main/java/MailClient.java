@@ -8,8 +8,6 @@ public class MailClient implements Mail{
     private String from;
     private String host;
 
-    FileLogger fileLogger = new FileLogger();
-    ConsoleLogger consoleLogger = new ConsoleLogger();
 
     public MailClient() {
         // Recipient's email ID needs to be mentioned.
@@ -78,8 +76,7 @@ public class MailClient implements Mail{
 
             System.out.println("Sent message successfully....");
 
-            consoleLogger.log("Mail "+subject+" send");
-            fileLogger.log("Mail "+subject+" send");
+            Principale.log("Mail "+subject+" send");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -114,17 +111,12 @@ public class MailClient implements Mail{
 
             for (int i = 0, n = messages.length; i < n; i++) {
                 Message message = messages[i];
-                fileLogger.log("---------------------------------"+"\n");
-                fileLogger.log("Email Number " + (i + 1)+"\n");
-                fileLogger.log("Subject: " + message.getSubject()+"\n");
-                fileLogger.log("From: " + message.getFrom()[0]+"\n");
-                fileLogger.log("Text: " + message.getContent().toString()+"\n");
 
-                consoleLogger.log("---------------------------------");
-                consoleLogger.log("Email Number " + (i + 1));
-                consoleLogger.log("Subject: " + message.getSubject());
-                consoleLogger.log("From: " + message.getFrom()[0]);
-                consoleLogger.log("Text: " + message.getContent().toString());
+                Principale.log("---------------------------------"+"\n");
+                Principale.log("Email Number " + (i + 1)+"\n");
+                Principale.log("Subject: " + message.getSubject()+"\n");
+                Principale.log("From: " + message.getFrom()[0]+"\n");
+                Principale.log("Text: " + message.getContent().toString()+"\n");
 
             }
 
