@@ -1,4 +1,4 @@
 public interface Mail {
-    boolean send();
+    boolean send(String subject, String message);
     Object receive();
 }
