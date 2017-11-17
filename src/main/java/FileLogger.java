@@ -2,6 +2,8 @@ import java.io.*;
 
 public class FileLogger implements Logger {
 
+    private static String content;
+
     public FileLogger() {
 
     }
@@ -12,7 +14,8 @@ public class FileLogger implements Logger {
         ObjectOutputStream o = new ObjectOutputStream(f);
 
         // Write objects to file
-        o.writeObject(object.toString());
+        content+=object.toString();
+        o.writeObject(content);
 
         o.close();
 
