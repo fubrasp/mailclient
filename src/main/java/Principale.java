@@ -3,12 +3,14 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class Principale {
 
-    private static MailClient mailClient = new MailClient();
+    private static MailService mailClient;
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
-       ApplicationContext context = new ClassPathXmlApplicationContext(String.valueOf(Principale.class
-               .getClassLoader().getResource("beans.xml")));
+        ApplicationContext context = new ClassPathXmlApplicationContext(String.valueOf(Principale.class
+                .getClassLoader().getResource("beans.xml")));
+
+        mailClient = (MailService) context.getBean("MailClient");
 
         mailClient.send("Test subject", "Awesome client");
         mailClient.receive();
@@ -31,7 +33,6 @@ public class Principale {
             e.printStackTrace();
         }
     }
-
 
 
 }

@@ -6,7 +6,7 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
-public class MailClient {
+public class MailClient implements  MailService{
 
     private Mail mail = new Mail();
 
