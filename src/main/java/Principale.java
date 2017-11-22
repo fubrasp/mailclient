@@ -1,12 +1,15 @@
-import sun.rmi.runtime.Log;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class Principale {
-    //public static FileLogger fileLogger = new FileLogger();
-    //public static ConsoleLogger consoleLogger = new ConsoleLogger();
+
+    private static MailClient mailClient = new MailClient();
 
     public static void main(String[] args){
 
-        MailClient mailClient = new MailClient();
+       ApplicationContext context = new ClassPathXmlApplicationContext(String.valueOf(Principale.class
+               .getClassLoader().getResource("beans.xml")));
+
         mailClient.send("Test subject", "Awesome client");
         mailClient.receive();
     }
@@ -28,5 +31,7 @@ public class Principale {
             e.printStackTrace();
         }
     }
+
+
 
 }

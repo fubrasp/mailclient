@@ -1,31 +1,20 @@
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Service;
+
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
-public class MailClient implements Mail{
-    private String to;
-    private String from;
-    private String host;
+public class MailClient {
 
-
-    public MailClient() {
-        // Recipient's email ID needs to be mentioned.
-        this.to="guillaume5524@gmail.com";
-
-        // Sender's email ID needs to be mentioned
-        this.from = "guillaume5524@gmail.com";
-
-        // Assuming you are sending email through relay.jangosmtp.net
-        this.host = "smtp.mailtrap.io";
-
-    }
+    private Mail mail = new Mail();
 
     public Properties initClientSMTPConf(){
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", host);
+        props.put("mail.smtp.host", mail.getHost());
         props.put("mail.smtp.port", "25");
         return props;
     }
@@ -34,7 +23,7 @@ public class MailClient implements Mail{
         //create properties field
         Properties properties = new Properties();
 
-        properties.put("mail.pop3.host", this.host);
+        properties.put("mail.pop3.host", mail.getHost());
         properties.put("mail.pop3.port", "1100");
         properties.put("mail.pop3.starttls.enable", "true");
         return properties;
@@ -59,11 +48,11 @@ public class MailClient implements Mail{
             Message message = new MimeMessage(session);
 
             // Set From: header field of the header.
-            message.setFrom(new InternetAddress(from));
+            message.setFrom(new InternetAddress(mail.getFrom()));
 
             // Set To: header field of the header.
             message.setRecipients(Message.RecipientType.TO,
-                    InternetAddress.parse(to));
+                    InternetAddress.parse(mail.getTo()));
 
             // Set Subject: header field
             message.setSubject(subject);
@@ -97,7 +86,7 @@ public class MailClient implements Mail{
             //create the POP3 store object and connect with the pop server
             Store store = emailSession.getStore("pop3");
 
-            store.connect(this.host, username, password);
+            store.connect(mail.getHost(), username, password);
 
             //create the folder object and open it
             Folder emailFolder = store.getFolder("INBOX");
