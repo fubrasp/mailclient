@@ -1,3 +1,5 @@
+package mail;
+
 public class Mail {
 
     private String to;

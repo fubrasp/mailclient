@@ -1,3 +1,4 @@
+package loggers;
 
 public class ConsoleLogger implements Logger {
     public ConsoleLogger() {

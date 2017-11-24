@@ -1,5 +1,4 @@
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Service;
+package mail;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;

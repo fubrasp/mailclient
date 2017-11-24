@@ -1,3 +1,5 @@
+package loggers;
+
 import java.io.*;
 
 public class FileLogger implements Logger {

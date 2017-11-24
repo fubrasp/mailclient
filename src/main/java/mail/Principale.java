@@ -1,3 +1,6 @@
+package mail;
+
+import loggers.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -18,8 +21,8 @@ public class Principale {
 
     public static void log(String message) {
         try {
-            Class loggerF = Class.forName("FileLogger");
-            Class loggerC = Class.forName("ConsoleLogger");
+            Class loggerF = Class.forName("loggers.FileLogger");
+            Class loggerC = Class.forName("loggers.ConsoleLogger");
             Logger loggerCC = (Logger) loggerC.newInstance();
             Logger loggerFF = (Logger) loggerF.newInstance();
             loggerCC.log(message);
