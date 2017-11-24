@@ -8,13 +8,22 @@ import java.util.Properties;
 public class MailClient implements  MailService{
 
     private Mail mail = new Mail();
+    private String host;
+    private String port;
+    private String username;
+    private String password;
+    private String from;
+    private String portSMTP;
+    private String portPOP3;
 
     public Properties initClientSMTPConf(){
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", mail.getHost());
-        props.put("mail.smtp.port", "25");
+        //props.put("mail.smtp.host", mail.getHost());
+        props.put("mail.smtp.host", this.host);
+        //props.put("mail.smtp.port", "25");
+        props.put("mail.smtp.port", this.portSMTP);
         return props;
     }
 
@@ -22,8 +31,10 @@ public class MailClient implements  MailService{
         //create properties field
         Properties properties = new Properties();
 
-        properties.put("mail.pop3.host", mail.getHost());
-        properties.put("mail.pop3.port", "1100");
+        //properties.put("mail.pop3.host", mail.getHost());
+        properties.put("mail.pop3.host", this.host);
+        //properties.put("mail.pop3.port", "1100");
+        properties.put("mail.pop3.port", this.portPOP3);
         properties.put("mail.pop3.starttls.enable", "true");
         return properties;
     }
@@ -31,8 +42,8 @@ public class MailClient implements  MailService{
 
 
     public boolean send(String subject, String messageContent) {
-        final String username = "75f1ea16e05565";//change accordingly
-        final String password = "06551260b74810";//change accordingly
+        final String username = this.username;//change accordingly
+        final String password = this.password;//change accordingly
 
         // Get the Session object.
         Session session = Session.getInstance(initClientSMTPConf(),
@@ -74,8 +85,11 @@ public class MailClient implements  MailService{
     }
 
     public Object receive() {
-        final String username = "75f1ea16e05565";//change accordingly
-        final String password = "06551260b74810";//change accordingly
+        //final String username = "75f1ea16e05565";//change accordingly
+        //final String password = "06551260b74810";//change accordingly
+
+        final String username = this.username;//change accordingly
+        final String password = this.password;//change accordingly
 
         try {
 
@@ -122,4 +136,59 @@ public class MailClient implements  MailService{
         return null;
     }
 
+    public void setHost(String host) {
+        this.host = host;
+    }
+
+    public String getHost() {
+        return host;
+    }
+
+    public void setPort(String port) {
+        this.port = port;
+    }
+
+    public String getPort() {
+        return port;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setFrom(String from) {
+        this.from = from;
+    }
+
+    public String getFrom() {
+        return from;
+    }
+
+    public void setPortSMTP(String portSMTP) {
+        this.portSMTP = portSMTP;
+    }
+
+    public String getPortSMTP() {
+        return portSMTP;
+    }
+
+    public void setPortPOP3(String portPOP3) {
+        this.portPOP3 = portPOP3;
+    }
+
+    public String getPortPOP3() {
+        return portPOP3;
+    }
 }
