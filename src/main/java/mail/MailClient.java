@@ -14,13 +14,13 @@ import java.util.Properties;
 @PropertySource("classpath:application.properties")
 public class MailClient implements  MailService{
 
-    private Mail mail = new Mail();
+    //private Mail mail = new Mail();
 
     @Value("${mail.host}")
     private String host;
 
-    @Value("${mail.port}")
-    private String port;
+    /*@Value("${mail.port}")
+    private String port;*/
 
     @Value("${mail.username}")
     private String username;
@@ -37,40 +37,19 @@ public class MailClient implements  MailService{
     @Value("${mail.portPOP3}")
     private String portPOP3;
 
-    /*public MailClient(Mail mail) {
-        this.mail = mail;
-    }
-
-    public MailClient(String host, String port, String username, String password, String from, String portSMTP, String portPOP3) {
-        this.host=host;
-        this.port=port;
-        this.username=username;
-        this.password=password;
-        this.from=from;
-        this.portSMTP=portSMTP;
-        this.portPOP3=portPOP3;
-    }*/
-
+    @Value("${mail.to}")
+    private String to;
 
     @Bean
     public MailClient MailClient() {
         return new MailClient();
     }
 
-    /*@Bean
-    public MailSender MailSender() {
-        return new MailSender();
-    }*/
-
-
-
     public Properties initClientSMTPConf(){
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
-        //props.put("mail.smtp.host", mail.getHost());
         props.put("mail.smtp.host", this.host);
-        //props.put("mail.smtp.port", "25");
         props.put("mail.smtp.port", this.portSMTP);
         return props;
     }
@@ -104,11 +83,11 @@ public class MailClient implements  MailService{
             Message message = new MimeMessage(session);
 
             // Set From: header field of the header.
-            message.setFrom(new InternetAddress(mail.getFrom()));
+            message.setFrom(new InternetAddress(this.from));
 
             // Set To: header field of the header.
             message.setRecipients(Message.RecipientType.TO,
-                    InternetAddress.parse(mail.getTo()));
+                    InternetAddress.parse(this.to));
 
             // Set Subject: header field
             message.setSubject(subject);
@@ -145,7 +124,7 @@ public class MailClient implements  MailService{
             //create the POP3 store object and connect with the pop server
             Store store = emailSession.getStore("pop3");
 
-            store.connect(mail.getHost(), username, password);
+            store.connect(this.host, this.username, this.password);
 
             //create the folder object and open it
             Folder emailFolder = store.getFolder("INBOX");
@@ -188,14 +167,6 @@ public class MailClient implements  MailService{
 
     public String getHost() {
         return host;
-    }
-
-    public void setPort(String port) {
-        this.port = port;
-    }
-
-    public String getPort() {
-        return port;
     }
 
     public void setUsername(String username) {
