@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
@@ -14,13 +15,8 @@ import java.util.Properties;
 @PropertySource("classpath:application.properties")
 public class MailClient implements  MailService{
 
-    //private Mail mail = new Mail();
-
     @Value("${mail.host}")
     private String host;
-
-    /*@Value("${mail.port}")
-    private String port;*/
 
     @Value("${mail.username}")
     private String username;
@@ -39,6 +35,11 @@ public class MailClient implements  MailService{
 
     @Value("${mail.to}")
     private String to;
+
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer propertyConfigInDev() {
+        return new PropertySourcesPlaceholderConfigurer();
+    }
 
     @Bean
     public MailClient MailClient() {
