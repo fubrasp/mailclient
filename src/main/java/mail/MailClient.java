@@ -1,20 +1,68 @@
 package mail;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
+@Configuration
+@PropertySource("classpath:application.properties")
 public class MailClient implements  MailService{
 
     private Mail mail = new Mail();
+
+    @Value("${mail.host}")
     private String host;
+
+    @Value("${mail.port}")
     private String port;
+
+    @Value("${mail.username}")
     private String username;
+
+    @Value("${mail.password}")
     private String password;
+
+    @Value("${mail.from}")
     private String from;
+
+    @Value("${mail.portSMTP}")
     private String portSMTP;
+
+    @Value("${mail.portPOP3}")
     private String portPOP3;
+
+    /*public MailClient(Mail mail) {
+        this.mail = mail;
+    }
+
+    public MailClient(String host, String port, String username, String password, String from, String portSMTP, String portPOP3) {
+        this.host=host;
+        this.port=port;
+        this.username=username;
+        this.password=password;
+        this.from=from;
+        this.portSMTP=portSMTP;
+        this.portPOP3=portPOP3;
+    }*/
+
+
+    @Bean
+    public MailClient MailClient() {
+        return new MailClient();
+    }
+
+    /*@Bean
+    public MailSender MailSender() {
+        return new MailSender();
+    }*/
+
+
 
     public Properties initClientSMTPConf(){
         Properties props = new Properties();
@@ -38,8 +86,6 @@ public class MailClient implements  MailService{
         properties.put("mail.pop3.starttls.enable", "true");
         return properties;
     }
-
-
 
     public boolean send(String subject, String messageContent) {
         final String username = this.username;//change accordingly
