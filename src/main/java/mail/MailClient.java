@@ -7,7 +7,6 @@ import java.util.Properties;
 
 public class MailClient implements  MailService{
 
-    private Mail mail = new Mail();
     private String host;
     private String port;
     private String username;
@@ -58,11 +57,11 @@ public class MailClient implements  MailService{
             Message message = new MimeMessage(session);
 
             // Set From: header field of the header.
-            message.setFrom(new InternetAddress(mail.getFrom()));
+            message.setFrom(new InternetAddress(this.from));
 
             // Set To: header field of the header.
             message.setRecipients(Message.RecipientType.TO,
-                    InternetAddress.parse(mail.getTo()));
+                    InternetAddress.parse(this.from));
 
             // Set Subject: header field
             message.setSubject(subject);
@@ -99,7 +98,7 @@ public class MailClient implements  MailService{
             //create the POP3 store object and connect with the pop server
             Store store = emailSession.getStore("pop3");
 
-            store.connect(mail.getHost(), username, password);
+            store.connect(this.host, username, password);
 
             //create the folder object and open it
             Folder emailFolder = store.getFolder("INBOX");

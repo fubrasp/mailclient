@@ -2,7 +2,6 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
-    <bean id="Mail" class="mail.Mail"></bean>
     <bean id="MailClient" class="mail.MailClient">
         <property name="host" value="smtp.mailtrap.io" />
         <property name="portSMTP" value="25" />
